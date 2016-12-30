@@ -1,0 +1,24 @@
+{
+    "name": "smarter-solutions/google-play-scraper",
+    "description": "This is a library that allows you to get the public data of an application published on Google Play. ",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jerry Anselmi",
+            "email": "jerry.anselmi@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "ElMijo/php-html-dom": "^1.0"
+    },
+    "require-dev": {
+        "satooshi/php-coveralls": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "SmarterSolutions\\PhpTools\\GooglePlayScraper":"src/GooglePlayScraper/"
+        }
+    }
+}
