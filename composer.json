@@ -18,7 +18,7 @@
     },
     "autoload": {
         "psr-4": {
-            "SmarterSolutions\\PhpTools\\GooglePlayScraper":"src/GooglePlayScraper/"
+            "SmarterSolutions\\PhpTools\\GooglePlayScraper\\":"src/GooglePlayScraper/"
         }
     }
 }
