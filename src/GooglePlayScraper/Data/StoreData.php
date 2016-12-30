@@ -17,8 +17,20 @@ namespace SmarterSolutions\PhpTools\GooglePlayScraper\Data;
 interface StoreData
 {
     /**
+    * Allows to obtain the identifier of the rows.
+    * @return string
+    */
+    public function getId();
+
+    /**
      * Allow to obtain the name of the structure that stores data.
      * @return string
      */
-    public function getDataName();
+    public function getName();
+
+    /**
+     * Allow to obtain the name of the structure that stores data.
+     * @return string
+     */
+    public function getClass();
 }

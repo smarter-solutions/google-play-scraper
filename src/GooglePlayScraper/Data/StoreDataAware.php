@@ -34,6 +34,25 @@ abstract class StoreDataAware
     }
 
     /**
+     * It allows you to search for a value within a data file by its identifier.
+     * @param  mixed $identifier
+     * @return \SmarterSolutions\PhpTools\GooglePlayScraper\Data\Value\BaseValue|null
+     */
+    public function find($identifier)
+    {
+        $result = null;
+        $dataId = $this->getId();
+        $class = $this->getClass();
+        foreach ($this->data as $row) {
+            if (property_exists($row, $dataId) && $row->{$dataId} === $identifier) {
+                $result = new $class($row);
+                break;
+            }
+        }
+        return $result;
+    }
+
+    /**
      * Import data from a repository.
      *
      * @throw SmarterSolutions\PhpTools\GooglePlayScraper\Exception\DataFieException
@@ -46,7 +65,7 @@ abstract class StoreDataAware
         $filename = sprintf(
             "%s/store/%s.json",
             __DIR__,
-            $this->getDataName()
+            $this->getName()
         );
 
         if (!is_readable($filename)) {
