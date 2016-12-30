@@ -1,0 +1,200 @@
+[
+    {
+        "identifier": "ANDROID_WEAR",
+        "names": {
+            "en":"Android Wear"
+        }
+    },
+    {
+        "identifier": "ART_AND_DESIGN",
+        "names": {
+            "en":"Art & Design"
+        }
+    },
+    {
+        "identifier": "AUTO_AND_VEHICLES",
+        "names": {
+            "en":"Auto & Vehicles"
+        }
+    },
+    {
+        "identifier": "BEAUTY",
+        "names": {
+            "en":"Beauty"
+        }
+    },
+    {
+        "identifier": "BOOKS_AND_REFERENCE",
+        "names": {
+            "en":"Books & Reference"
+        }
+    },
+    {
+        "identifier": "BUSINESS",
+        "names": {
+            "en":"Business"
+        }
+    },
+    {
+        "identifier": "COMICS",
+        "names": {
+            "en":"Comics"
+        }
+    },
+    {
+        "identifier": "COMMUNICATION",
+        "names": {
+            "en":"Communication"
+        }
+    },
+    {
+        "identifier": "DATING",
+        "names": {
+            "en":"Dating"
+        }
+    },
+    {
+        "identifier": "EDUCATION",
+        "names": {
+            "en":"Education"
+        }
+    },
+    {
+        "identifier": "ENTERTAINMENT",
+        "names": {
+            "en":"Entertainment"
+        }
+    },
+    {
+        "identifier": "EVENTS",
+        "names": {
+            "en":"Events"
+        }
+    },
+    {
+        "identifier": "FINANCE",
+        "names": {
+            "en":"Finance"
+        }
+    },
+    {
+        "identifier": "FOOD_AND_DRINK",
+        "names": {
+            "en":"Food & Drink"
+        }
+    },
+    {
+        "identifier": "HEALTH_AND_FITNESS",
+        "names": {
+            "en":"Health & Fitness"
+        }
+    },
+    {
+        "identifier": "HOUSE_AND_HOME",
+        "names": {
+            "en":"House & Home"
+        }
+    },
+    {
+        "identifier": "LIBRARIES_AND_DEMO",
+        "names": {
+            "en":"Libraries & Demo"
+        }
+    },
+    {
+        "identifier": "LIFESTYLE",
+        "names": {
+            "en":"Lifestyle"
+        }
+    },
+    {
+        "identifier": "MAPS_AND_NAVIGATION",
+        "names": {
+            "en":"Maps & Navigation"
+        }
+    },
+    {
+        "identifier": "MEDICAL",
+        "names": {
+            "en":"Medical"
+        }
+    },
+    {
+        "identifier": "MUSIC_AND_AUDIO",
+        "names": {
+            "en":"Mus Music & Audio"
+        }
+    },
+    {
+        "identifier": "NEWS_AND_MAGAZINES",
+        "names": {
+            "en":"News & Magazines"
+        }
+    },
+    {
+        "identifier": "PARENTING",
+        "names": {
+            "en":"Parenting"
+        }
+    },
+    {
+        "identifier": "PERSONALIZATION",
+        "names": {
+            "en":"Personalization"
+        }
+    },
+    {
+        "identifier": "PHOTOGRAPHY",
+        "names": {
+            "en":"Photography"
+        }
+    },
+    {
+        "identifier": "PRODUCTIVITY",
+        "names": {
+            "en":"Productivity"
+        }
+    },
+    {
+        "identifier": "SHOPPING",
+        "names": {
+            "en":"Shopping"
+        }
+    },
+    {
+        "identifier": "SOCIAL",
+        "names": {
+            "en":"Social"
+        }
+    },
+    {
+        "identifier": "SPORTS",
+        "names": {
+            "en":"Sports"
+        }
+    },
+    {
+        "identifier": "TOOLS",
+        "names": {
+            "en":"Tools"
+        }
+    },
+    {
+        "identifier": "TRAVEL_AND_LOCAL",
+        "names": {
+            "en":"Travel & Local"
+        }
+    },
+    {
+        "identifier": "VIDEO_PLAYERS",
+        "names": {
+            "en":"Video Players & Editors"
+        }
+    },
+    {
+        "identifier": "WEATHER",
+        "names": {
+            "en":"Weather"
+        }
+    }
+]
