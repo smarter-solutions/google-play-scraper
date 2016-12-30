@@ -8,14 +8,14 @@ use SmarterSolutions\PhpTools\GooglePlayScraper\Data\StoreDataAware;
  * This tool allows you to generate the url corresponding to the service to be
  * consumed from Google Play.
  */
-class AppCategory extends StoreDataAware implements StoreData
+class Locale extends StoreDataAware implements StoreData
 {
     /**
     * @inheritdoc
     */
     public function getId()
     {
-        return 'identifier';
+        return 'locale';
     }
 
     /**
@@ -23,7 +23,7 @@ class AppCategory extends StoreDataAware implements StoreData
      */
     public function getName()
     {
-        return 'appcategory';
+        return 'locale';
     }
 
     /**
@@ -31,6 +31,6 @@ class AppCategory extends StoreDataAware implements StoreData
      */
     public function getClass()
     {
-        return '\SmarterSolutions\PhpTools\GooglePlayScraper\Data\Value\AppCategory';
+        return '\SmarterSolutions\PhpTools\GooglePlayScraper\Data\Value\Locale';
     }
 }
