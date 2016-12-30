@@ -5,7 +5,7 @@ namespace SmarterSolutions\PhpTools\GooglePlayScraper\Helper;
  * This tool allows you to generate the url corresponding to the service to be
  * consumed from Google Play.
  */
-class GenerateUrl
+class Url
 {
     const BASE_URL = 'https://play.google.com/store/apps';
 
