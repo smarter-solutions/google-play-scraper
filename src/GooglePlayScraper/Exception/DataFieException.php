@@ -12,6 +12,8 @@ namespace SmarterSolutions\PhpTools\GooglePlayScraper\Exception;
 
 /**
  * This exception thrown when there is a problem with a data file.
+ *
+ * @author Jerry Anselmi <jerry.anselmi@gmail.com>
  */
 class DataFieException extends \RuntimeException
 {

@@ -2,6 +2,8 @@
 namespace SmarterSolutions\PhpTools\GooglePlayScraper;
 
 use PHPTools\PHPHtmlDom\PHPHtmlDom;
+use SmarterSolutions\PhpTools\GooglePlayScraper\Data\Value\BaseValue;
+use SmarterSolutions\PhpTools\GooglePlayScraper\Helper\Url;
 
 /**
  * Base class that allows you to obtain information from an application of distista forms.
@@ -11,16 +13,17 @@ class GooglePlayScraper
     /**
      * @var \PHPTools\PHPHtmlDom\PHPHtmlDom
      */
-    private $dom;
+    private $phpHtmlDom;
 
     /**
-     * @var \PHPTools\PHPHtmlDom\PHPHtmlDom
+     * @var \SmarterSolutions\PhpTools\GooglePlayScraper\Helper\Url
      */
-    private $phpHtmlDom;
+    private $url;
 
     public function __construct()
     {
         $this->phpHtmlDom = new PHPHtmlDom();
+        $this->url = new Url();
     }
 
     /**
@@ -28,8 +31,18 @@ class GooglePlayScraper
      * @param  string $packageName Package name
      * @return [type]
      */
-    public function findByPackage($packageName)
+    public function findByPackage($packageName, $locale = BaseValue::DEFAULT_LOCALE)
     {
-        # code...
+        $url = $this->url->generate(
+            'apps_details',
+            ['id' => $packageName],
+            $locale
+        );
+
+        if (!$this->phpHtmlDom->importHTML('data2.txt')) {
+
+        }
+
+        var_dump($this->phpHtmlDom);
     }
 }

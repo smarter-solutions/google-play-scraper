@@ -10,6 +10,11 @@ use SmarterSolutions\PhpTools\GooglePlayScraper\Data\StoreDataAware;
  */
 class Locale extends StoreDataAware implements StoreData
 {
+    public function isLocale($locale)
+    {
+        return !!$this->find($locale);
+    }
+
     /**
     * @inheritdoc
     */

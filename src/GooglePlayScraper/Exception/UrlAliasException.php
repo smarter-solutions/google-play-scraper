@@ -11,10 +11,10 @@
 namespace SmarterSolutions\PhpTools\GooglePlayScraper\Exception;
 
 /**
- * This exception is thrown when there is a problem when parsing data in a data file.
+ * This exception is thrown when the alias of the url does not exist.
  *
  * @author Jerry Anselmi <jerry.anselmi@gmail.com>
  */
-class ParseDataFieException extends \RuntimeException
+class UrlAliasException extends \RuntimeException
 {
 }
