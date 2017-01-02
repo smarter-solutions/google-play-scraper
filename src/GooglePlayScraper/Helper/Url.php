@@ -1,4 +1,12 @@
 <?php
+/*
+ * This file is part of the GooglePlayScraper package.
+ *
+ * (c) Smarter Solutions <contacto@smarter.com.ve>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace SmarterSolutions\PhpTools\GooglePlayScraper\Helper;
 
 use \SmarterSolutions\PhpTools\GooglePlayScraper\Data\Value\BaseValue;
@@ -46,7 +54,7 @@ class Url
         $params['hl'] = $this->getLocale($locale);
         $params = http_build_query($params);
         $querySeparator = empty($params) ? '': '?';
-        
+
         return sprintf(
             "%s%s%s%s",
             self::BASE_URL,
