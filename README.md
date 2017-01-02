@@ -59,16 +59,16 @@ object(SmarterSolutions\PhpTools\GooglePlayScraper\Object\Application)
     public 'video' =>
         array
             empty
-    public 'genre' => string 'Tools' (length=5)
+    public 'genre' => string 'Tools'
     public 'comments' =>
         array
-            0 => string 'Excelente poder ver el uso que le das a tu movil' (length=48)
+            0 => string 'Excelente poder ver el uso que le das a tu movil'
     public 'whatsnew' =>
         array
-            0 => string 'SoluciÃ³n de algunos bugs.' (length=28)
-    public 'offeredBy' => string 'Smartme Analytics' (length=17)
+            0 => string 'SoluciÃ³n de algunos bugs.'
+    public 'offeredBy' => string 'Smartme Analytics'
     public 'developerInfo' =>
         array
-            'url' => string 'http://smartmeanalytics.com/smartmeapp/landing/' (length=47)
-            'email' => string 'contact@smartmegroup.com' (length=24)
+            'url' => string 'http://smartmeanalytics.com/smartmeapp/landing/'
+            'email' => string 'contact@smartmegroup.com'
 ```
