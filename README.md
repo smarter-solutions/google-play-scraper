@@ -72,3 +72,14 @@ object(SmarterSolutions\PhpTools\GooglePlayScraper\Object\Application)
             'url' => string 'http://smartmeanalytics.com/smartmeapp/landing/'
             'email' => string 'contact@smartmegroup.com'
 ```
+
+You can also set the locale. By default English.
+
+```php
+$scraper = new SmarterSolutions\PhpTools\GooglePlayScraper\GooglePlayScraper();
+
+$data1 = $scraper->findAppByPackage('com.smartme.analytics', 'es');
+$data2 = $scraper->findAppByPackage('com.smartme.analytics', 'es_419');
+$data3 = $scraper->findAppByPackage('com.smartme.analytics', 'de');
+$data4 = $scraper->findAppByPackage('com.smartme.analytics', 'en_GB');
+```
