@@ -13,8 +13,7 @@ use SmarterSolutions\PhpTools\GooglePlayScraper\Data\StoreData;
 use SmarterSolutions\PhpTools\GooglePlayScraper\Data\StoreDataAware;
 
 /**
- * This tool allows you to generate the url corresponding to the service to be
- * consumed from Google Play.
+ * This class allows you to handle locale,
  *
  * @author Jerry Anselmi <jerry.anselmi@gmail.com>
  */

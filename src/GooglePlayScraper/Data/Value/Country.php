@@ -10,6 +10,7 @@
 namespace SmarterSolutions\PhpTools\GooglePlayScraper\Data\Value;
 
 /**
+ * The country value object
  * @author Jerry Anselmi <jerry.anselmi@gmail.com>
  */
 class Country extends BaseValue
@@ -24,11 +25,19 @@ class Country extends BaseValue
      */
     protected $locale;
 
+    /**
+     * Get code
+     * @return string
+     */
     public function getCode()
     {
         return $this->code;
     }
 
+    /**
+     * Get name
+     * @return string
+     */
     public function getName()
     {
         return $this->name;

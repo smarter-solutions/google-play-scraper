@@ -10,6 +10,7 @@
 namespace SmarterSolutions\PhpTools\GooglePlayScraper\Data\Value;
 
 /**
+ * The locale value object
  * @author Jerry Anselmi <jerry.anselmi@gmail.com>
  */
 class Locale extends BaseValue
@@ -24,11 +25,19 @@ class Locale extends BaseValue
      */
     protected $locale;
 
+    /**
+     * Get locale.
+     * @return string
+     */
     public function getLocale()
     {
         return $this->locale;
     }
 
+    /**
+     * Get name.
+     * @return string
+     */
     public function getName()
     {
         return $this->name;

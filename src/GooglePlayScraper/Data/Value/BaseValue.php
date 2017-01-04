@@ -12,6 +12,7 @@ namespace SmarterSolutions\PhpTools\GooglePlayScraper\Data\Value;
 use stdClass;
 
 /**
+ * Base structure of value object
  * @author Jerry Anselmi <jerry.anselmi@gmail.com>
  */
 class BaseValue

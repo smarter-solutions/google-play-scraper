@@ -13,16 +13,15 @@ use SmarterSolutions\PhpTools\GooglePlayScraper\Data\StoreData;
 use SmarterSolutions\PhpTools\GooglePlayScraper\Data\StoreDataAware;
 
 /**
- * This tool allows you to generate the url corresponding to the service to be
- * consumed from Google Play.
+ * This class allows countries to manage.
  *
  * @author Jerry Anselmi <jerry.anselmi@gmail.com>
  */
 class Country extends StoreDataAware implements StoreData
 {
-    public function isLocale($locale)
+    public function isCode($code)
     {
-        return !!$this->find($locale);
+        return !!$this->find($code);
     }
 
     /**
