@@ -9,8 +9,6 @@
  */
 namespace SmarterSolutions\PhpTools\GooglePlayScraper\Data\Value;
 
-use stdClass;
-
 /**
  * @author Jerry Anselmi <jerry.anselmi@gmail.com>
  */
@@ -22,11 +20,11 @@ class Locale extends BaseValue
     protected $name;
 
     /**
-     * @var stdClass
+     * @var string
      */
     protected $locale;
 
-    public function getLocaler()
+    public function getLocale()
     {
         return $this->locale;
     }
