@@ -12,7 +12,9 @@ namespace SmarterSolutions\PhpTools\GooglePlayScraper\Object;
 use PHPTools\PHPHtmlDom\PHPHtmlDom;
 
 /**
+ * This class encapsulates the application data.
  *
+ * @author Jerry Anselmi <jerry.anselmi@gmail.com>
  */
 class Application
 {
