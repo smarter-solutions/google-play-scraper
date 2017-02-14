@@ -12,9 +12,7 @@ namespace SmarterSolutions\PhpTools\GooglePlayScraper\Object;
 use PHPTools\PHPHtmlDom\PHPHtmlDom;
 
 /**
- * This class encapsulates the application data.
  *
- * @author Jerry Anselmi <jerry.anselmi@gmail.com>
  */
 class Application
 {
@@ -57,17 +55,17 @@ class Application
      * Number of stars that have the application.
      * @var float
      */
-    public $score;
+    public $score = 0;
     /**
      * Number of app ratings.
      * @var integer
      */
-    public $reviews;
+    public $reviews = 0;
     /**
      * Star Ratings Detail.
      * @var array
      */
-    public $histogram;
+    public $histogram = [];
     /**
      * Last update.
      * @var string
@@ -173,14 +171,14 @@ class Application
     private function setMetaInfo(PHPHtmlDom $dom)
     {
         $metadata = $dom->e('.details-section.metadata');
-        $this->updated = $metadata->find('[itemprop="datePublished"]')->eq(0)->text;
-        $this->version = floatval($metadata->find('[itemprop="softwareVersion"]')->eq(0)->text);
-        $this->androidVersionText = $metadata->find('[itemprop="operatingSystems"]')->eq(0)->text;
-        $this->androidVersion = floatval($metadata->find('[itemprop="operatingSystems"]')->eq(0)->text);
-        $this->offeredBy = $metadata->find('.meta-info .content')->eq(8)->text;
+        $this->updated = $this->getElementText($metadata, '[itemprop="datePublished"]');
+        $this->version = floatval($this->getElementText($metadata, '[itemprop="softwareVersion"]'));
+        $this->androidVersionText = $this->getElementText($metadata, '[itemprop="operatingSystems"]');
+        $this->androidVersion = floatval($this->androidVersionText);
+        $this->offeredBy = $this->getElementText($metadata, '.meta-info .content', 8);
         $this->downloads = array_filter($this->normalizeFloat(explode(
             ' ',
-            $metadata->find('[itemprop="numDownloads"]')->eq(0)->text
+            $this->getElementText($metadata, '[itemprop="numDownloads"]')
         )), 'floatval');
         $this
             ->setContentRatingInfo($metadata)
@@ -191,8 +189,12 @@ class Application
     private function setReviewsInfo(PHPHtmlDom $dom)
     {
         $reviews = $dom->e('.details-section.reviews');
-        $this->score = $this->normalizeFloat($reviews->find('.score')->eq(0)->text);
-        $this->reviews =  intval($reviews->find('.reviews-num')->eq(0)->text);
+        $this->score = $this->normalizeFloat(
+            $this->getElementText($reviews, '.score')
+        );
+        $this->reviews =  intval(
+            $this->getElementText($reviews, '.reviews')
+        );
         $this
             ->setHistogramInfo($reviews)
             ->setCommentsInfo($reviews)
@@ -240,39 +242,45 @@ class Application
     private function setHistogramInfo($reviews)
     {
         $histogram = [];
-        $reviews
-            ->find('.rating-bar-container')
-            ->each(function ($inx, $val) use (&$histogram) {
-                $index = intval($val->childs->find('.bar-label')->eq(0)->text);
-                $value = intval($val->childs->find('.bar-number')->eq(0)->text);
-                $histogram[$index] = $value;
-            })
-        ;
-        ksort($histogram);
+        $ratingbarContainer = $reviews->find('.rating-bar-container');
+        if (is_a($ratingbarContainer, 'PHPTools\PHPHtmlDom\Core\PHPHtmlDomList')) {
+            $ratingbarContainer
+                ->each(function ($inx, $val) use (&$histogram) {
+                    $index = intval($val->childs->find('.bar-label')->eq(0)->text);
+                    $value = intval($val->childs->find('.bar-number')->eq(0)->text);
+                    $histogram[$index] = $value;
+                })
+            ;
+            ksort($histogram);
+        }
         $this->histogram = $histogram;
         return $this;
     }
     private function setCommentsInfo($reviews)
     {
         $comments = [];
-        $reviews
-            ->find('.featured-review .review-text')
-            ->each(function ($inx, $val) use (&$comments) {
-                $comments[] = $val->text;
-            })
-        ;
+        $featuredReview = $reviews->find('.featured-review .review-text');
+        if (is_a($featuredReview, 'PHPTools\PHPHtmlDom\Core\PHPHtmlDomList')) {
+            $featuredReview
+                ->each(function ($inx, $val) use (&$comments) {
+                    $comments[] = $val->text;
+                })
+            ;
+        }
         $this->comments = $comments;
         return $this;
     }
     private function setContentRatingInfo($metadata)
     {
         $contentRating = [];
-        $metadata
-            ->find('[itemprop="contentRating"]')
-            ->each(function ($inx, $val) use (&$contentRating) {
-                $contentRating[] = $val->text;
-            })
-        ;
+        if (is_a($metadata, 'PHPTools\PHPHtmlDom\Core\PHPHtmlDomList')) {
+            $metadata
+                ->find('[itemprop="contentRating"]')
+                ->each(function ($inx, $val) use (&$contentRating) {
+                    $contentRating[] = $val->text;
+                })
+            ;
+        }
         $this->contentRating = $contentRating;
         return $this;
     }
@@ -280,25 +288,27 @@ class Application
     {
         $developerInfo = [];
         $pattern = "/^mailto\:/";
-        $metadata
-            ->find('.meta-info .dev-link')
-            ->each(function ($inx, $val) use (&$developerInfo, $pattern) {
-                if ($inx > 2) {
-                    return;
-                }
-                if (preg_match($pattern, $val->attrs->href)) {
-                    $developerInfo['email'] = preg_replace(
-                        $pattern,
-                        '',
-                        $val->attrs->href
-                    );
-                } else {
-                    $urlQuery = [];
-                    parse_str(parse_url($val->attrs->href, PHP_URL_QUERY), $urlQuery);
-                    $developerInfo['url'] = $urlQuery['q'];
-                }
-            })
-        ;
+        if (is_a($metadata, 'PHPTools\PHPHtmlDom\Core\PHPHtmlDomList')) {
+            $metadata
+                ->find('.meta-info .dev-link')
+                ->each(function ($inx, $val) use (&$developerInfo, $pattern) {
+                    if ($inx > 2) {
+                        return;
+                    }
+                    if (preg_match($pattern, $val->attrs->href)) {
+                        $developerInfo['email'] = preg_replace(
+                            $pattern,
+                            '',
+                            $val->attrs->href
+                        );
+                    } else {
+                        $urlQuery = [];
+                        parse_str(parse_url($val->attrs->href, PHP_URL_QUERY), $urlQuery);
+                        $developerInfo['url'] = $urlQuery['q'];
+                    }
+                })
+            ;
+        }
         $this->developerInfo = $developerInfo;
         return $this;
     }
@@ -312,6 +322,17 @@ class Application
         );
     }
 
+    public function getElementText($dom, $selector, $inx = 0)
+    {
+        $value = null;
+        $elements = $dom->find($selector);
+        if (is_a($elements, 'PHPTools\PHPHtmlDom\Core\PHPHtmlDomList')
+            && $elements->count()
+        ) {
+            $value = $elements->eq($inx)->text;
+        }
+        return !$value;
+    }
     public function normalizeFloat($val)
     {
         $val = str_replace(',', '.', str_replace('.', '', $val));
