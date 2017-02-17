@@ -244,13 +244,11 @@ class Application
         $histogram = [];
         $ratingbarContainer = $reviews->find('.rating-bar-container');
         if (is_a($ratingbarContainer, 'PHPTools\PHPHtmlDom\Core\PHPHtmlDomList')) {
-            $ratingbarContainer
-                ->each(function ($inx, $val) use (&$histogram) {
-                    $index = intval($val->childs->find('.bar-label')->eq(0)->text);
-                    $value = intval($val->childs->find('.bar-number')->eq(0)->text);
-                    $histogram[$index] = $value;
-                })
-            ;
+            $ratingbarContainer->each(function ($inx, $val) use (&$histogram) {
+                $index = intval($val->childs->find('.bar-label')->eq(0)->text);
+                $value = intval($val->childs->find('.bar-number')->eq(0)->text);
+                $histogram[$index] = $value;
+            });
             ksort($histogram);
         }
         $this->histogram = $histogram;
@@ -261,11 +259,9 @@ class Application
         $comments = [];
         $featuredReview = $reviews->find('.featured-review .review-text');
         if (is_a($featuredReview, 'PHPTools\PHPHtmlDom\Core\PHPHtmlDomList')) {
-            $featuredReview
-                ->each(function ($inx, $val) use (&$comments) {
-                    $comments[] = $val->text;
-                })
-            ;
+            $featuredReview->each(function ($inx, $val) use (&$comments) {
+                $comments[] = $val->text;
+            });
         }
         $this->comments = $comments;
         return $this;
@@ -274,12 +270,12 @@ class Application
     {
         $contentRating = [];
         if (is_a($metadata, 'PHPTools\PHPHtmlDom\Core\PHPHtmlDomList')) {
-            $metadata
-                ->find('[itemprop="contentRating"]')
-                ->each(function ($inx, $val) use (&$contentRating) {
+            $contentRatingList = $metadata->find('[itemprop="contentRating"]');
+            if (is_a($contentRatingList, 'PHPTools\PHPHtmlDom\Core\PHPHtmlDomList')) {
+                $contentRatingList->each(function ($inx, $val) use (&$contentRating) {
                     $contentRating[] = $val->text;
-                })
-            ;
+                });
+            }
         }
         $this->contentRating = $contentRating;
         return $this;
@@ -289,9 +285,9 @@ class Application
         $developerInfo = [];
         $pattern = "/^mailto\:/";
         if (is_a($metadata, 'PHPTools\PHPHtmlDom\Core\PHPHtmlDomList')) {
-            $metadata
-                ->find('.meta-info .dev-link')
-                ->each(function ($inx, $val) use (&$developerInfo, $pattern) {
+            $devLinkList = $metadata->find('.meta-info .dev-link');
+            if (is_a($devLinkList, 'PHPTools\PHPHtmlDom\Core\PHPHtmlDomList')) {
+                $devLinkList->each(function ($inx, $val) use (&$developerInfo, $pattern) {
                     if ($inx > 2) {
                         return;
                     }
@@ -306,8 +302,8 @@ class Application
                         parse_str(parse_url($val->attrs->href, PHP_URL_QUERY), $urlQuery);
                         $developerInfo['url'] = $urlQuery['q'];
                     }
-                })
-            ;
+                });
+            }
         }
         $this->developerInfo = $developerInfo;
         return $this;
