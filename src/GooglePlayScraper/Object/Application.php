@@ -171,19 +171,22 @@ class Application
     private function setMetaInfo(PHPHtmlDom $dom)
     {
         $metadata = $dom->e('.details-section.metadata');
-        $this->updated = $this->getElementText($metadata, '[itemprop="datePublished"]');
-        $this->version = floatval($this->getElementText($metadata, '[itemprop="softwareVersion"]'));
-        $this->androidVersionText = $this->getElementText($metadata, '[itemprop="operatingSystems"]');
-        $this->androidVersion = floatval($this->androidVersionText);
-        $this->offeredBy = $this->getElementText($metadata, '.meta-info .content', 8);
-        $this->downloads = array_filter($this->normalizeFloat(explode(
-            ' ',
-            $this->getElementText($metadata, '[itemprop="numDownloads"]')
-        )), 'floatval');
-        $this
+        if (is_a($metadata, 'PHPTools\PHPHtmlDom\Core\PHPHtmlDomList')) {
+            $this->updated = $this->getElementText($metadata, '[itemprop="datePublished"]');
+            $this->version = floatval($this->getElementText($metadata, '[itemprop="softwareVersion"]'));
+            $this->androidVersionText = $this->getElementText($metadata, '[itemprop="operatingSystems"]');
+            $this->androidVersion = floatval($this->androidVersionText);
+            $this->offeredBy = $this->getElementText($metadata, '.meta-info .content', 8);
+            $this->downloads = array_filter($this->normalizeFloat(explode(
+                ' ',
+                $this->getElementText($metadata, '[itemprop="numDownloads"]')
+            )), 'floatval');
+            $this
             ->setContentRatingInfo($metadata)
             ->setDeveloperInfo($metadata)
-        ;
+            ;
+        }
+
         return $this;
     }
     private function setReviewsInfo(PHPHtmlDom $dom)
@@ -269,13 +272,11 @@ class Application
     private function setContentRatingInfo($metadata)
     {
         $contentRating = [];
-        if (is_a($metadata, 'PHPTools\PHPHtmlDom\Core\PHPHtmlDomList')) {
-            $contentRatingList = $metadata->find('[itemprop="contentRating"]');
-            if (is_a($contentRatingList, 'PHPTools\PHPHtmlDom\Core\PHPHtmlDomList')) {
-                $contentRatingList->each(function ($inx, $val) use (&$contentRating) {
-                    $contentRating[] = $val->text;
-                });
-            }
+        $contentRatingList = $metadata->find('[itemprop="contentRating"]');
+        if (is_a($contentRatingList, 'PHPTools\PHPHtmlDom\Core\PHPHtmlDomList')) {
+            $contentRatingList->each(function ($inx, $val) use (&$contentRating) {
+                $contentRating[] = $val->text;
+            });
         }
         $this->contentRating = $contentRating;
         return $this;
@@ -284,26 +285,24 @@ class Application
     {
         $developerInfo = [];
         $pattern = "/^mailto\:/";
-        if (is_a($metadata, 'PHPTools\PHPHtmlDom\Core\PHPHtmlDomList')) {
-            $devLinkList = $metadata->find('.meta-info .dev-link');
-            if (is_a($devLinkList, 'PHPTools\PHPHtmlDom\Core\PHPHtmlDomList')) {
-                $devLinkList->each(function ($inx, $val) use (&$developerInfo, $pattern) {
-                    if ($inx > 2) {
-                        return;
-                    }
-                    if (preg_match($pattern, $val->attrs->href)) {
-                        $developerInfo['email'] = preg_replace(
-                            $pattern,
-                            '',
-                            $val->attrs->href
-                        );
-                    } else {
-                        $urlQuery = [];
-                        parse_str(parse_url($val->attrs->href, PHP_URL_QUERY), $urlQuery);
-                        $developerInfo['url'] = $urlQuery['q'];
-                    }
-                });
-            }
+        $devLinkList = $metadata->find('.meta-info .dev-link');
+        if (is_a($devLinkList, 'PHPTools\PHPHtmlDom\Core\PHPHtmlDomList')) {
+            $devLinkList->each(function ($inx, $val) use (&$developerInfo, $pattern) {
+                if ($inx > 2) {
+                    return;
+                }
+                if (preg_match($pattern, $val->attrs->href)) {
+                    $developerInfo['email'] = preg_replace(
+                        $pattern,
+                        '',
+                        $val->attrs->href
+                    );
+                } else {
+                    $urlQuery = [];
+                    parse_str(parse_url($val->attrs->href, PHP_URL_QUERY), $urlQuery);
+                    $developerInfo['url'] = $urlQuery['q'];
+                }
+            });
         }
         $this->developerInfo = $developerInfo;
         return $this;
