@@ -48,9 +48,9 @@ class Application
     public $icon;
     /**
      * Number of downloads.
-     * @var string[]
+     * @var array
      */
-    public $downloads;
+    public $downloads = [];
     /**
      * Number of stars that have the application.
      * @var float
@@ -76,11 +76,6 @@ class Application
      * @var float
      */
     public $version;
-    /**
-     * Required android version (text).
-     * @var string
-     */
-    public $androidVersionText;
     /**
      * Required android version (number).
      * @var float
@@ -173,31 +168,63 @@ class Application
         $metadata = $dom->e('.details-section.metadata');
         if (is_a($metadata, 'PHPTools\PHPHtmlDom\Core\PHPHtmlDomList')) {
             $this->updated = $this->getElementText($metadata, '[itemprop="datePublished"]');
-            $this->version = floatval($this->getElementText($metadata, '[itemprop="softwareVersion"]'));
-            $this->androidVersionText = $this->getElementText($metadata, '[itemprop="operatingSystems"]');
-            $this->androidVersion = floatval($this->androidVersionText);
             $this->offeredBy = $this->getElementText($metadata, '.meta-info .content', 8);
-            $this->downloads = array_filter($this->normalizeFloat(explode(
-                ' ',
-                $this->getElementText($metadata, '[itemprop="numDownloads"]')
-            )), 'floatval');
             $this
-            ->setContentRatingInfo($metadata)
-            ->setDeveloperInfo($metadata)
+                ->setAndroidVersion($metadata)
+                ->setVersion($metadata)
+                ->setDownloads($metadata)
+                ->setContentRatingInfo($metadata)
+                ->setDeveloperInfo($metadata)
             ;
         }
 
         return $this;
     }
+
+    private function setAndroidVersion($metadata)
+    {
+        $androidVersion = $this->getElementText($metadata, '[itemprop="operatingSystems"]');
+        $this->androidVersion = [
+            'raw' => $androidVersion,
+            'value' => trim(current(explode(' ', $androidVersion))),
+        ];
+        return $this;
+    }
+
+    private function setVersion($metadata)
+    {
+        $version = $this->getElementText($metadata, '[itemprop="softwareVersion"]');
+        $this->version = [
+            'raw' => $version,
+            'value' => trim(current(explode(' ', $version))),
+        ];
+        return $this;
+    }
+
+    private function setDownloads($metadata)
+    {
+        $downloads = $this->getElementText($metadata, '[itemprop="numDownloads"]');
+        $this->downloads = [
+            'raw' => $downloads,
+            'values' => array_filter(array_map(
+                [$this, 'normalizeFloat'],
+                explode('-',$downloads)
+            ), 'floatval')
+        ];
+        return $this;
+    }
+
     private function setReviewsInfo(PHPHtmlDom $dom)
     {
         $reviews = $dom->e('.details-section.reviews');
+        $reviewsNum = $this->getElementText($reviews, '.reviews-num');
         $this->score = $this->normalizeFloat(
             $this->getElementText($reviews, '.score')
         );
-        $this->reviews =  intval(
-            $this->getElementText($reviews, '.reviews')
-        );
+        $this->reviews =  [
+            'raw' => $reviewsNum,
+            'value' => $this->normalizeFloat($reviewsNum),
+        ];
         $this
             ->setHistogramInfo($reviews)
             ->setCommentsInfo($reviews)
@@ -249,8 +276,11 @@ class Application
         if (is_a($ratingbarContainer, 'PHPTools\PHPHtmlDom\Core\PHPHtmlDomList')) {
             $ratingbarContainer->each(function ($inx, $val) use (&$histogram) {
                 $index = intval($val->childs->find('.bar-label')->eq(0)->text);
-                $value = intval($val->childs->find('.bar-number')->eq(0)->text);
-                $histogram[$index] = $value;
+                $value = $val->childs->find('.bar-number')->eq(0)->text;
+                $histogram[$index] = [
+                    'raw' => $value,
+                    'value' => $this->normalizeFloat($value),
+                ];
             });
             ksort($histogram);
         }
@@ -260,7 +290,7 @@ class Application
     private function setCommentsInfo($reviews)
     {
         $comments = [];
-        $featuredReview = $reviews->find('.featured-review .review-text');
+        $featuredReview = $reviews->find('.single-review .review-body');
         if (is_a($featuredReview, 'PHPTools\PHPHtmlDom\Core\PHPHtmlDomList')) {
             $featuredReview->each(function ($inx, $val) use (&$comments) {
                 $comments[] = $val->text;
@@ -319,14 +349,14 @@ class Application
 
     public function getElementText($dom, $selector, $inx = 0)
     {
-        $value = null;
+        $value = '';
         $elements = $dom->find($selector);
         if (is_a($elements, 'PHPTools\PHPHtmlDom\Core\PHPHtmlDomList')
             && $elements->count()
         ) {
             $value = $elements->eq($inx)->text;
         }
-        return !$value;
+        return $value;
     }
     public function normalizeFloat($val)
     {

@@ -25,25 +25,55 @@ object(SmarterSolutions\PhpTools\GooglePlayScraper\Object\Application)
     public 'url' => string 'https://play.google.com/store/apps/details?id=com.smartme.analytics'
     public 'name' => string 'Smartme App'
     public 'summary' => string 'Smartme is a research app to learn the use of smartphones'
-    public 'description' => string 'Smartme App te dice el uso que haces de tu Smartphone y te lo compara con el resto de usuarios. Smartme es una aplicaciÃ³n de investigaciÃ³n de mercados que nos permite conocer cÃ³mo utilizamos los smartphones. DescÃ¡rgatela y obtÃ©n puntos. Haz un uso mÃ¡s inteligente de tu mÃ³vil y Ãºnete a otros panelistas que contribuyen a generar conocimiento sobre los consumidores mÃ³viles.'
+    public 'description' =>
+        array
+            0 => 'Smartme App es la app gratuita que te da acceso al Club Smartme. Sácale mayor partido a tu móvil mientras disfrutas de los privilegios de formar parte de un exclusivo Club Privado en el que recibes: Descuentos en primeras marcas como Amazon, Tous, Carrefour, Booking, Telepizza, Casa del Libro, Pull & Bear, Decathlon, Apple, entre otras, Dinero directo, Devolución de un porcentaje de las compras de productos seleccionados, Participación en Sorteos mensuales y muchas sorpresas más.'
+            ...
+            11 => '¡Únete ahora a nuestra comunidad y recibe 5.000 puntos de bienvenida!'
     public 'icon' => string 'https://lh3.googleusercontent.com/Sl8QrAwUdS0MPr2DjbvN5doSNbqyNQr0SSbPtf_iwrrJRrIfDvjQNFYCe677ai1tCA=w300',
     public 'downloads' =>
         array
-            0 => string '1.000'
-            2 => string '5.000'
-            public 'score' => float 39
-    public 'reviews' => int 195
+            'raw' => string '1.000 - 5.000'
+            'values' =>
+                array
+                    0 => float 1000
+                    1 => float 5000
+    public 'score' => float 39
+    public 'reviews' =>
+        array
+            'raw' => string '216'
+            'value' => float 216
     public 'histogram' =>
         array
-            1 => int 19
-            2 => int 3
-            3 => int 30
-            4 => int 78
-            5 => int 65
-    public 'updated' => string 'November 2, 2016'
-    public 'version' => float 1
-    public 'androidVersionText' => string '4.1 and up'
-    public 'androidVersion' => float 4.1
+          1 =>
+            array
+                'raw' => string '19'
+                'value' => float 19
+          2 =>
+            array
+                'raw' => string '5'
+                'value' => float 5
+          3 =>
+            array
+                'raw' => string '30'
+                'value' => float 30
+          4 =>
+            array
+                'raw' => string '79'
+                'value' => float 79
+          5 =>
+            array
+                'raw' => string '83'
+                'value' => float 83
+    public 'updated' => string '21 de marzo de 2017'
+    public 'version' =>
+        array
+            'raw' => string '2.0.1'
+            'value' => string '2.0.1'
+    public 'androidVersion' =>
+        array
+            'raw' => string '4.1 y versiones superiores'
+            'value' => string '4.1'
     public 'contentRating' =>
         array
             0 => string 'Everyone'
@@ -62,10 +92,14 @@ object(SmarterSolutions\PhpTools\GooglePlayScraper\Object\Application)
     public 'genre' => string 'Tools'
     public 'comments' =>
         array
-            0 => string 'Excelente poder ver el uso que le das a tu movil'
+            0 => string 'Esta muy bien y no molesta tenerla instalada'
+            ...
+            39 => string 'Espero que es verdad lo de los puntos,la aplicación tiene buena grafica ðEs verdad, una estafa y Toluna por desinstalar la app me quitaron puntos de mi cuenta de Toluna'
     public 'whatsnew' =>
         array
-            0 => string 'SoluciÃ³n de algunos bugs.'
+            0 => string 'Hemos incluido la posibilidad de modificar tu contraseña desde la sección "Mi perfil".' (length=92)
+            1 => string 'Además, hemos solucionado algunos problemas de desempeño y sincronización de datos.' (length=92)
+            2 => string '¡Sigue disfrutando de las ventajas del Club Smartme!'
     public 'offeredBy' => string 'Smartme Analytics'
     public 'developerInfo' =>
         array
